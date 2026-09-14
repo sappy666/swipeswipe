@@ -1,0 +1,9 @@
+{
+  "name": "Swipewipe Web",
+  "short_name": "Swipewipe",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f6c4a5",
+  "theme_color": "#f6c4a5",
+  "description": "Interfaz web responsive para revisar y depurar fotos con gestos de swipe."
+}

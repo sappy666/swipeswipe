@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#f5c5a6" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <title>Swipewipe — Limpia tu galería</title>
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <svg class="svg-sprite" aria-hidden="true">
+    <symbol id="i-flame" viewBox="0 0 24 24"><path d="M12.7 2.2c.4 3.2-1.7 4.5-3.1 6.2-1.6 1.8-2.5 3.6-2.1 5.7.2 1.2.8 2.3 1.7 3.1-.1-1.7.6-3.1 1.7-4.3.8-.8 1.3-1.8 1.2-3 .1-.1.2-.1.3 0 2.5 2.2 4.2 4.4 4 7.1 1.2-1.2 2-2.9 2-4.9 0-4-2.8-7.1-5.7-9.9Z" fill="currentColor"/><path d="M12.2 21.4c-2.2 0-4-1.7-4-3.9 0-1.7 1-3 2.3-4.3.2 1.4.8 2.2 1.6 2.9.8-.8 1.3-1.7 1.4-2.9 1.5 1.4 2.5 2.8 2.5 4.4 0 2.1-1.7 3.8-3.8 3.8Z" fill="currentColor"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 17h11" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round"/></symbol>
+    <symbol id="i-chevron-left" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-shuffle" viewBox="0 0 24 24"><path d="M16 3h5v5M4 20 21 3M21 16v5h-5M15 15l6 6M4 4l5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-image" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="9" cy="10" r="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="m5 18 4.4-4.6 3.2 3 2.3-2.2 4.1 3.8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3m3 0-1 13H7L6 7m4 4v5m4-5v5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-keep" viewBox="0 0 24 24"><path d="M20 6v5h-5M20 11a8 8 0 1 0 1 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"/></symbol>
+    <symbol id="i-camera" viewBox="0 0 24 24"><path d="M4 7h3l1.5-2h7L17 7h3a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2Z" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="13" r="4" fill="none" stroke="currentColor" stroke-width="2"/></symbol>
+    <symbol id="i-video" viewBox="0 0 24 24"><rect x="3" y="6" width="13" height="12" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="m16 10 5-3v10l-5-3" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+    <symbol id="i-scan" viewBox="0 0 24 24"><path d="M4 9V6a2 2 0 0 1 2-2h3M15 4h3a2 2 0 0 1 2 2v3M20 15v3a2 2 0 0 1-2 2h-3M9 20H6a2 2 0 0 1-2-2v-3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="12" r="3.5" fill="none" stroke="currentColor" stroke-width="2"/></symbol>
+    <symbol id="i-live" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-dasharray="2.5 2.5"/></symbol>
+  </svg>
+
+  <div id="app" class="app-shell">
+    <header class="topbar">
+      <div class="brand" aria-label="Swipewipe">swipewipe</div>
+      <div class="top-actions">
+        <button class="icon-btn streak" id="streakBtn" aria-label="Racha de limpieza">
+          <svg class="icon"><use href="#i-flame"/></svg><b id="streakCount">1</b>
+        </button>
+        <button class="icon-btn" id="menuBtn" aria-label="Menú">
+          <svg class="icon"><use href="#i-menu"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <main id="screenHome" class="screen active">
+      <section id="monthList" class="month-list" aria-label="Meses">
+        <button class="month-card red" data-month="2025-07"><span>JUL ’25</span><small>0 fotos</small></button>
+        <button class="month-card green" data-month="2025-06"><span>JUN ’25</span><small>0 fotos</small></button>
+        <button class="month-card yellow" data-month="2025-05"><span>MAY ’25</span><small>0 fotos</small></button>
+        <button class="month-card lilac" data-month="2025-04"><span>ABR ’25</span><small>0 fotos</small></button>
+        <button class="month-card forest" data-month="2025-03"><span>MAR ’25</span><small>0 fotos</small></button>
+        <button class="month-card pink" data-month="2025-02"><span>FEB ’25</span><small>0 fotos</small></button>
+        <button class="month-card ice" data-month="2025-01"><span>ENE ’25</span><small>0 fotos</small></button>
+        <button class="month-card navy" data-month="2024-12"><span>DIC ’24</span><small>0 fotos</small></button>
+      </section>
+    </main>
+
+    <main id="screenDeck" class="screen deck-screen">
+      <div class="deck-head">
+        <button id="backBtn" class="head-icon" aria-label="Volver"><svg class="icon"><use href="#i-chevron-left"/></svg></button>
+        <div class="deck-title-wrap"><div id="deckTitle" class="deck-title">Tus fotos</div><div id="deckProgress" class="deck-progress">0 / 0</div></div>
+        <button id="shuffleDeck" class="head-icon" aria-label="Mezclar"><svg class="icon"><use href="#i-shuffle"/></svg></button>
+      </div>
+
+      <section class="deck-wrap">
+        <div id="emptyDeck" class="empty-deck">
+          <div class="empty-icon"><svg class="icon"><use href="#i-image"/></svg></div>
+          <h2>Elige fotos de tu celular</h2>
+          <p>Selecciona fotos de tu galería para empezar a revisarlas con gestos.</p>
+          <button id="pickPhotosDeck" class="cta-pill big">Elegir fotos</button>
+        </div>
+        <div id="cardStack" class="card-stack hidden" aria-live="polite"></div>
+      </section>
+
+      <section class="swipe-actions hidden" id="swipeActions">
+        <button class="action keep" id="keepBtn"><svg class="icon"><use href="#i-keep"/></svg><b>Conservar</b></button>
+        <button class="action trash" id="trashBtn"><svg class="icon"><use href="#i-trash"/></svg><b>Eliminar</b></button>
+      </section>
+
+      <section class="queue-bar hidden" id="queueBar">
+        <span><b id="trashCount">0</b> marcadas para borrar</span>
+        <div><button class="mini" id="undoBtn">Deshacer</button><button class="mini danger" id="reviewBtn">Revisar</button></div>
+      </section>
+    </main>
+
+    <input id="photoPicker" type="file" accept="image/*" multiple hidden />
+  </div>
+
+  <div class="scrim hidden" id="scrim"></div>
+
+  <aside class="sheet hidden" id="randomSheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
+    <div class="grabber"></div>
+    <h2 id="sheetTitle">Elige qué tipos de contenido ver al azar</h2>
+    <button class="filter f1" data-filter="all"><span>cualquier cosa</span><svg class="icon"><use href="#i-shuffle"/></svg></button>
+    <button class="filter f2" data-filter="photos"><span>fotos</span><svg class="icon"><use href="#i-image"/></svg></button>
+    <button class="filter f3" data-filter="videos"><span>vídeos</span><svg class="icon"><use href="#i-video"/></svg></button>
+    <button class="filter f4" data-filter="screenshots"><span>capturas de pantalla</span><svg class="icon"><use href="#i-scan"/></svg></button>
+    <button class="filter f5" data-filter="live"><span>live photos</span><svg class="icon"><use href="#i-live"/></svg></button>
+  </aside>
+
+  <aside class="sheet review-sheet hidden" id="reviewSheet" role="dialog" aria-modal="true" aria-labelledby="reviewTitle">
+    <div class="grabber"></div>
+    <div class="review-head">
+      <div><h2 id="reviewTitle">Revisar eliminaciones</h2><p id="reviewSubtitle">0 elementos</p></div>
+      <button class="icon-btn small" id="closeReview" aria-label="Cerrar"><svg class="icon"><use href="#i-x"/></svg></button>
+    </div>
+    <div id="reviewGrid" class="review-grid"></div>
+    <div class="review-actions"><button class="secondary" id="clearTrash">Mantener todo</button><button class="danger-solid" id="exportTrash">Eliminar de esta sesión</button></div>
+    <p class="fineprint">En una web de iPhone, Safari puede abrir el selector de fotos pero no tiene permiso para borrar directamente elementos del carrete. Para borrado real se necesita la versión nativa con PhotoKit.</p>
+  </aside>
+
+  <button id="pickPhotosTop" class="floating-add" aria-label="Elegir fotos"><svg class="icon"><use href="#i-camera"/></svg></button>
+  <div id="toast" class="toast hidden" role="status"></div>
+  <script src="app.js"></script>
+</body>
+</html>
